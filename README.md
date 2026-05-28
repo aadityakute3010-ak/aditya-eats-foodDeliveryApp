@@ -2,6 +2,9 @@
 
 ### Modern Food Delivery Web Application
 
+🌐 Live Demo
+https://aditya-eats-food-delivery-app.vercel.app/
+
 <p align="center">
   <img src="https://img.shields.io/badge/React-Frontend-blue?style=for-the-badge&logo=react" />
   <img src="https://img.shields.io/badge/Redux-Toolkit-purple?style=for-the-badge&logo=redux" />
