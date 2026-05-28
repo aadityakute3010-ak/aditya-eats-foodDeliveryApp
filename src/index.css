@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #E23744;
+  --color-dark-bg: #0F172A; /* Deep Slate Blue-Black */
+  --color-card-bg: #1E293B; /* Lighter Slate for cards */
+}
+
+@layer base {
+  body {
+    /* Set global dark background and light text */
+    @apply bg-dark-bg text-slate-50 antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+} 
+
+/* Custom Scrollbar for Dark Theme */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-slate-900;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-brand rounded-full;
+}
