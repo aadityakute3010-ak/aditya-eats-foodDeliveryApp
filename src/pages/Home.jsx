@@ -2,15 +2,18 @@ import { useMemo, useState } from 'react';
 import { Search } from 'lucide-react';
 import RestaurantCard from '../components/RestaurantCard';
 import spiceRouteImg from '../assets/images/SpiceRouteHotelimg.avif';
-import { restaurants } from '../data/restaurants';
+import { useRestaurants } from '../context/RestaurantContext';
 
 
 export default function Home() {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('All');
+    const { allRestaurants } = useRestaurants();
 
     const categories = [
-        'All', ...new Set(restaurants.flatMap((restaurant) => restaurant.cuisines))];
+        'All',
+        ...new Set(allRestaurants.flatMap((r) => r.cuisines)),
+    ];
 
     const suggestions = useMemo(() => {
 
@@ -18,50 +21,40 @@ export default function Home() {
 
         const search = searchTerm.toLowerCase();
 
-        const restaurantSuggestions = restaurants
-            .filter((restaurant) =>
-                restaurant.name.toLowerCase().includes(search)
-            )
-            .map((restaurant) => restaurant.name);
+        const restaurantSuggestions = allRestaurants
+            .filter((r) => r.name.toLowerCase().includes(search))
+            .map((r) => r.name);
 
-        const cuisineSuggestions = restaurants
-            .flatMap((restaurant) => restaurant.cuisines)
-            .filter((cuisine) =>
-                cuisine.toLowerCase().includes(search)
-            );
+        const cuisineSuggestions = allRestaurants
+            .flatMap((r) => r.cuisines)
+            .filter((c) => c.toLowerCase().includes(search));
 
         return [...new Set([
             ...restaurantSuggestions,
             ...cuisineSuggestions,
         ])].slice(0, 5);
 
-    }, [searchTerm]);
+    }, [searchTerm, allRestaurants]);
 
     const filteredRestaurants = useMemo(() => {
-        return restaurants.filter((restaurant) => {
+        return allRestaurants.filter((r) => {
             const matchesSearch =
-                restaurant.name
-                    .toLowerCase()
-                    .includes(searchTerm.toLowerCase()) ||
-                restaurant.cuisines.some((cuisine) =>
-                    cuisine
-                        .toLowerCase()
-                        .includes(searchTerm.toLowerCase())
-                );
+                r.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                r.cuisines.some((c) => c.toLowerCase().includes(searchTerm.toLowerCase()));
 
             const matchesCategory =
-                selectedCategory === 'All' ||
-                restaurant.cuisines.includes(selectedCategory);
+                selectedCategory === 'All' || r.cuisines.includes(selectedCategory);
 
             return matchesSearch && matchesCategory;
         });
-    }, [searchTerm, selectedCategory]);
+
+    }, [searchTerm, selectedCategory, allRestaurants]);
 
     return (
         <main className="min-h-screen pb-12 bg-slate-950 text-white">
 
             {/* HERO SECTION */}
-            <section className="relative h-[75vh] flex items-center justify-center mb-16 pt-24"> 
+            <section className="relative h-[75vh] flex items-center justify-center mb-16 pt-24">
 
                 {/* BACKGROUND IMAGE */}
                 <img

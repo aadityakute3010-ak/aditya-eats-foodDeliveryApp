@@ -5,9 +5,11 @@ import './index.css';
 import { Provider } from 'react-redux';
 import { store } from './redux/store.js';
 import { Toaster } from 'react-hot-toast';
+import { RestaurantProvider } from './context/RestaurantContext';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    <RestaurantProvider>
     <Provider store={store}>
       <App />
       <Toaster
@@ -17,5 +19,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         }}
       />
     </Provider>
+    </RestaurantProvider>
   </React.StrictMode>,
 );

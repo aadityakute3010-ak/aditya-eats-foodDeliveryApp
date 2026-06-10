@@ -3,14 +3,14 @@ import { Star, Clock, Info } from 'lucide-react';
 
 import MenuItem from '../components/MenuItem';
 import { restaurants } from '../data/restaurants';
+import { useRestaurants } from '../context/RestaurantContext';
 
 export default function RestaurantDetails() {
 
     const { id } = useParams();
 
-    const restaurant = restaurants.find(
-        (res) => res.id === Number(id)
-    );
+    const { allRestaurants } = useRestaurants();
+    const restaurant = allRestaurants.find((res) => res.id === Number(id));
 
     if (!restaurant) {
         return (
