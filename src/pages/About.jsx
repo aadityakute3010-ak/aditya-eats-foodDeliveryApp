@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import {
     Globe,
     Users,
@@ -49,7 +51,7 @@ export default function About() {
             icon: <ShieldCheck className="w-7 h-7" />,
         },
     ];
-
+    const navigate = useNavigate();
     return (
 
         <main className="bg-slate-950 text-white overflow-hidden">
@@ -94,7 +96,7 @@ export default function About() {
                         every single day.
                     </p>
 
-                    <button className="group bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-2xl text-lg font-bold shadow-2xl shadow-orange-500/20 transition-all duration-300 hover:scale-105 flex items-center gap-3 mx-auto">
+                    <button onClick={() => navigate('/')} className="group bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-2xl text-lg font-bold shadow-2xl shadow-orange-500/20 transition-all duration-300 hover:scale-105 flex items-center gap-3 mx-auto">
 
                         Explore Restaurants
 
@@ -315,7 +317,7 @@ export default function About() {
                         delivered straight to your doorstep.
                     </p>
 
-                    <button className="bg-orange-500 hover:bg-orange-600 text-white px-10 py-5 rounded-2xl text-xl font-bold shadow-2xl shadow-orange-500/30 transition-all duration-300 hover:scale-105">
+                    <button onClick={() => navigate('/')} className="bg-orange-500 hover:bg-orange-600 text-white px-10 py-5 rounded-2xl text-xl font-bold shadow-2xl shadow-orange-500/30 transition-all duration-300 hover:scale-105">
 
                         Start Ordering
                     </button>

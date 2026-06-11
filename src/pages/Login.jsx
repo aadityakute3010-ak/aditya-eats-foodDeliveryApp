@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from '../redux/authSlice';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 import {
     User,
@@ -12,7 +14,8 @@ import {
 } from 'lucide-react';
 
 export default function Login() {
-
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
     const [role, setRole] = useState('customer');
 
     const dispatch = useDispatch();
@@ -24,17 +27,21 @@ export default function Login() {
         e.preventDefault();
 
         dispatch(
-            login({
-                name: 'Aditya',
-                role: role,
-            })
+            login({name: 'Aditya', role: role,})
         );
-
-        navigate(role === 'admin' ? '/admin' : '/');
+        toast.success(`Welcome back! Logged in as ${role}.`, {
+        style: {
+            background: '#0f172a',
+            color: '#fff',
+            border: '1px solid #334155',
+            borderRadius: '14px',
+        },
+        iconTheme: { primary: '#22c55e', secondary: '#fff' },
+    });
+        navigate(role === 'admin' ? '/admin' : from, { replace: true });
     };
 
     return (
-
         <div className="relative min-h-screen overflow-hidden bg-slate-950 flex items-center justify-center px-4 py-28">
 
             {/* BACKGROUND IMAGE */}
@@ -82,11 +89,10 @@ export default function Login() {
                             onClick={() => setRole('customer')}
                             className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-bold transition-all duration-300
                             
-                            ${
-                                role === 'customer'
+                            ${role === 'customer'
                                     ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-lg'
                                     : 'text-slate-400 hover:text-white'
-                            }`}
+                                }`}
                         >
                             <User className="w-4 h-4" />
                             Customer
@@ -97,11 +103,10 @@ export default function Login() {
                             onClick={() => setRole('admin')}
                             className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-bold transition-all duration-300
                             
-                            ${
-                                role === 'admin'
+                            ${role === 'admin'
                                     ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-lg'
                                     : 'text-slate-400 hover:text-white'
-                            }`}
+                                }`}
                         >
                             <ShieldCheck className="w-4 h-4" />
                             Admin

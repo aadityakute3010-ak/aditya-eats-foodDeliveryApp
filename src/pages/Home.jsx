@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Search } from 'lucide-react';
 import RestaurantCard from '../components/RestaurantCard';
-import spiceRouteImg from '../assets/images/SpiceRouteHotelimg.avif';
 import { useRestaurants } from '../context/RestaurantContext';
 
 
@@ -10,10 +9,10 @@ export default function Home() {
     const [selectedCategory, setSelectedCategory] = useState('All');
     const { allRestaurants } = useRestaurants();
 
-    const categories = [
-        'All',
-        ...new Set(allRestaurants.flatMap((r) => r.cuisines)),
-    ];
+    const categories = useMemo(() => [
+    'All',
+    ...new Set(allRestaurants.flatMap((r) => r.cuisines)),
+], [allRestaurants]);
 
     const suggestions = useMemo(() => {
 

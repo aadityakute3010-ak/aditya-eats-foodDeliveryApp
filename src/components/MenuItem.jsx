@@ -1,7 +1,8 @@
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addItem } from '../redux/cartSlice';
-
 import toast from 'react-hot-toast';
 
 import {
@@ -12,15 +13,18 @@ import {
 } from 'lucide-react';
 
 export default function MenuItem({ item }) {
-
+    const { isLoggedIn } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
-
+    const navigate = useNavigate();
     const [isAdding, setIsAdding] = useState(false);
 
     const handleAddToCart = () => {
-
+        if (!isLoggedIn) {
+            toast.error('Please login to add items to cart!');
+            setTimeout(() => navigate('/login'), 1000);
+            return;
+        }
         setIsAdding(true);
-
         dispatch(addItem(item));
 
         toast.success(`${item.name} added to cart`, {

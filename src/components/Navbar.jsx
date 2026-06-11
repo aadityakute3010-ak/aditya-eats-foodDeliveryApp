@@ -23,7 +23,7 @@ export default function Navbar() {
   }, []);
 
   const { items } = useSelector(state => state.cart);
-  const { isAuthenticated, isAdmin } = useSelector(state => state.auth);
+  const { isLoggedIn, role } = useSelector(state => state.auth);
 
   const dispatch = useDispatch();
 
@@ -116,7 +116,7 @@ export default function Navbar() {
               About
             </Link>
 
-            {isAdmin && (
+            {role === 'admin' && (
               <Link
                 to="/admin"
                 className="hover:text-orange-400 transition-all duration-300"
@@ -140,7 +140,7 @@ export default function Navbar() {
             </Link>
 
             {/* LOGIN / LOGOUT */}
-            {isAuthenticated ? (
+            {isLoggedIn ? (
               <button
                 onClick={handleLogout}
                 className="flex items-center gap-2 hover:text-orange-400 transition-all duration-300"
